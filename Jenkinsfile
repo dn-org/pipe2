@@ -68,13 +68,10 @@ spec:
   stages{
     stage('Build, scan & Push') {
         steps {
-            container('docker') {
+            container('kubectl') {
                 withCredentials([usernamePassword(credentialsId: 'jfrog-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     
-                    sh 'kubectl get pods --all-namespaces -o jsonpath="{.items[*].spec.containers[*].image}" |\
-tr -s '[[:space:]]' '\n' |\
-sort |\
-uniq -c'
+                    sh 'kubectl get pods --all-namespaces -o jsonpath="{.items[*].spec.containers[*].image}" '
                     
                 }
             }
