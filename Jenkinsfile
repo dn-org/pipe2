@@ -68,10 +68,10 @@ spec:
   stages{
     stage('Build, scan & Push') {
         steps {
-            container('kubectl') {
-                withCredentials([usernamePassword(credentialsId: 'jfrog-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            container('docker') {
+                //withCredentials([usernamePassword(credentialsId: 'jfrog-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     
-                    sh 'kubectl get pods -n jenkins '
+                    sh 'docker ps '
                     
                 }
             }
