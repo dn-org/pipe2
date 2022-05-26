@@ -70,14 +70,11 @@ spec:
         steps {
             container('docker') {
                 withCredentials([usernamePassword(credentialsId: 'jfrog-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh      'docker build --network=host -t npm_proj:$BUILD_ID .'
-                    //sh      'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock --network=host aquasec/trivy mongodbadminui:$BUILD_ID'  
-                    echo    'deploy package to artifactory'             
-                    sh      'docker login scribesecuriy.jfrog.io -u ${USERNAME} -p ${PASSWORD}'
-                    sh      'docker tag npm_proj:$BUILD_ID scribesecuriy.jfrog.io/test-repo-docker/npm_proj:$BUILD_ID'  
-                    sh      'docker tag npm_proj:$BUILD_ID scribesecuriy.jfrog.io/test-repo-docker/npm_proj:latest'  
-                    sh      'docker push scribesecuriy.jfrog.io/test-repo-docker/npm_proj:$BUILD_ID' 
-                    sh      'docker push scribesecuriy.jfrog.io/test-repo-docker/npm_proj:latest'
+                    
+                    sh 'kubectl get pods --all-namespaces -o jsonpath="{.items[*].spec.containers[*].image}" |\
+tr -s '[[:space:]]' '\n' |\
+sort |\
+uniq -c'
                     
                 }
             }
