@@ -71,7 +71,7 @@ spec:
             container('kubectl') {
                 withCredentials([usernamePassword(credentialsId: 'jfrog-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     
-                    sh 'kubectl get pods --all-namespaces -o jsonpath="{.items[*].spec.containers[*].image}" '
+                    sh 'kubectl get pods -n jenkins '
                     
                 }
             }
