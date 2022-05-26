@@ -73,7 +73,7 @@ spec:
                     
                     sh 'docker ps '
                     
-                }
+                //}
             }
         }
     }
